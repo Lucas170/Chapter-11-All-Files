@@ -65,6 +65,7 @@ bool isYenPair = false;
 
 int current_direction, last_direction;
 bool first_time;
+int hasCrossed;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -144,7 +145,17 @@ int start() {
             
             // TDL 3: Replace exit rules with cross function
             
-            if(Crossed(sma10_1, sma40_1) == 2) Order = SIGNAL_CLOSEBUY; // Rule to EXIT a Long trade
+            hasCrossed = Crossed(sma10_1, sma40_1);
+            /*
+            We can only call the Crossed function once every tick. This is so as calling it more than once a tick will 
+            lead to inaccurate data in current_direction and last_direction.
+            
+            Eg. Let's assume we call it 4 times in a tick. A cross happens. Only the first instance of the Crossed function will register a cross.
+            The next 3 instances will never register a cross as current_direction will always equal to last_direction.
+            */
+            
+            
+            if(hasCrossed == 2) Order = SIGNAL_CLOSEBUY; // Rule to EXIT a Long trade
 
             //+------------------------------------------------------------------+
             //| Signal End(Exit Buy)                                             |
@@ -172,7 +183,7 @@ int start() {
             //| Signal Begin(Exit Sell)                                          |
             //+------------------------------------------------------------------+
 
-            if (Crossed(sma10_1, sma40_1) == 1) Order = SIGNAL_CLOSESELL; // Rule to EXIT a Short trade
+            if (hasCrossed == 1) Order = SIGNAL_CLOSESELL; // Rule to EXIT a Short trade
 
             //+------------------------------------------------------------------+
             //| Signal End(Exit Sell)                                            |
@@ -210,9 +221,9 @@ int start() {
    
    if (atr_current > atr_past) {
    
-      if (Crossed(sma10_1, sma40_1) == 1) Order = SIGNAL_BUY; // Rule to ENTER a Long trade
+      if (hasCrossed == 1) Order = SIGNAL_BUY; // Rule to ENTER a Long trade
    
-      if (Crossed(sma10_1, sma40_1) == 2) Order = SIGNAL_SELL; // Rule to ENTER a Short trade
+      if (hasCrossed == 2) Order = SIGNAL_SELL; // Rule to ENTER a Short trade
 
    }
    
