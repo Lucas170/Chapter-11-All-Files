@@ -105,6 +105,9 @@ int start() {
    sma40_1 = iMA(NULL, 0, sma_long, 0, MODE_SMA, PRICE_CLOSE, 1); // d
    sma40_2 = iMA(NULL, 0, sma_long, 0, MODE_SMA, PRICE_CLOSE, 2); // a
    
+   // Part of TDL 3
+   hasCrossed = Crossed(sma10_1, sma40_1);
+   
    atr_current = iATR(NULL, 0, atr_period, 1);    // ATR(20) now
    atr_past = iATR(NULL, 0, atr_period, atr_shift);      // ATR(20) 10 periods ago
    
@@ -145,7 +148,8 @@ int start() {
             
             // TDL 3: Replace exit rules with cross function
             
-            hasCrossed = Crossed(sma10_1, sma40_1);
+            // ----> See line 109. 
+            
             /*
             We can only call the Crossed function once every tick. This is so as calling it more than once a tick will 
             lead to inaccurate data in current_direction and last_direction.
@@ -154,7 +158,10 @@ int start() {
             The next 3 instances will never register a cross as current_direction will always equal to last_direction.
             */
             
-            
+            /*
+            Note: We place it at line 109 because we want it above line 131. This ensures it gets called every tick.
+            */
+                        
             if(hasCrossed == 2) Order = SIGNAL_CLOSEBUY; // Rule to EXIT a Long trade
 
             //+------------------------------------------------------------------+
