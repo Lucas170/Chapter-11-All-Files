@@ -64,7 +64,7 @@ bool isYenPair = false;
 //TDL 1: Declare variables needed for Cross function (see Function Notes below)
 
 int current_direction, last_direction;
-bool first_time;
+bool first_time = True;
 int hasCrossed;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -319,7 +319,7 @@ Function Notes:
 Declare these before the init() of the EA 
 
 int current_direction, last_direction;
-bool first_time;
+bool first_time = True;
 
 ----  
 
