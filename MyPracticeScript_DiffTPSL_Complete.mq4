@@ -27,7 +27,7 @@ void OnStart()
  
    Print(diffTPSL(TP, SL));
    
-   Comment(difference);
+   Comment(diffTPSL(TP, SL)); // Optional
   }
 //+------------------------------------------------------------------+
 
