@@ -124,7 +124,7 @@ int start() {
    bool IsTrade = False;
 
    for (int i = 0; i < Total; i ++) {
-      Ticket2 = OrderSelect(i, SELECT_BY_POS, MODE_TRADES); {
+      Ticket2 = OrderSelect(i, SELECT_BY_POS, MODE_TRADES); 
       if(OrderType() <= OP_SELL &&  OrderSymbol() == Symbol() && OrderMagicNumber() == MagicNumber) {
          IsTrade = True;
          if(OrderType() == OP_BUY) {
@@ -154,7 +154,7 @@ int start() {
                continue;
             }
             //Trailing stop
-            if(UseTrailingStop && TrailingStop > 0)                
+            if(UseTrailingStop && TrailingStop > 0) {                
                if(Bid - OrderOpenPrice() > P * Point * TrailingStop) {
                   if(OrderStopLoss() < Bid - P * Point * TrailingStop) {
                      Ticket2 = OrderModify(OrderTicket(), OrderOpenPrice(), Bid - P * Point * TrailingStop, OrderTakeProfit(), 0, MediumSeaGreen);
